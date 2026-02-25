@@ -1,0 +1,236 @@
+{
+  "name": "AI Leadership Insight Agent \u2014 RAG Pipeline",
+  "description": "Agentic RAG pipeline for leadership Q&A over company documents. Exported from notebook for visual editing in LangFlow.",
+  "version": "1.0.0",
+  "framework": "langflow",
+  "endpoint_name": "/api/v1/leadership-agent",
+  "nodes": [
+    {
+      "id": "input_node",
+      "type": "TextInput",
+      "label": "Leadership Question",
+      "config": {
+        "input_type": "text",
+        "placeholder": "e.g., What is our current revenue trend?",
+        "required": true
+      },
+      "position": {
+        "x": 100,
+        "y": 300
+      }
+    },
+    {
+      "id": "query_analyzer",
+      "type": "LLMChain",
+      "label": "Query Analyzer",
+      "config": {
+        "model": "gpt-5",
+        "provider": "AzureOpenAI",
+        "prompt_template": "Classify the question as FACTUAL, ANALYTICAL, or STRATEGIC. Reply with ONE word.",
+        "output_key": "question_type"
+      },
+      "position": {
+        "x": 400,
+        "y": 300
+      }
+    },
+    {
+      "id": "query_decomposer",
+      "type": "LLMChain",
+      "label": "Query Decomposer",
+      "config": {
+        "model": "gpt-5",
+        "provider": "AzureOpenAI",
+        "prompt_template": "Break complex questions into 2-3 sub-queries. Return JSON list.",
+        "conditional": "Skip if question_type == FACTUAL"
+      },
+      "position": {
+        "x": 700,
+        "y": 300
+      }
+    },
+    {
+      "id": "semantic_cache",
+      "type": "CustomComponent",
+      "label": "Semantic Query Cache",
+      "config": {
+        "similarity_threshold": 0.92,
+        "max_size": 50,
+        "embedding_model": "text-embedding",
+        "description": "Checks if a semantically similar query was already answered"
+      },
+      "position": {
+        "x": 700,
+        "y": 100
+      }
+    },
+    {
+      "id": "vector_store",
+      "type": "FAISS",
+      "label": "Dense Retrieval (FAISS)",
+      "config": {
+        "embedding_model": "text-embedding",
+        "provider": "AzureOpenAI",
+        "top_k": 10,
+        "index_type": "FlatL2"
+      },
+      "position": {
+        "x": 1000,
+        "y": 200
+      }
+    },
+    {
+      "id": "bm25_retriever",
+      "type": "BM25Retriever",
+      "label": "Sparse Retrieval (BM25)",
+      "config": {
+        "top_k": 10,
+        "tokenizer": "whitespace"
+      },
+      "position": {
+        "x": 1000,
+        "y": 400
+      }
+    },
+    {
+      "id": "rrf_fusion",
+      "type": "CustomComponent",
+      "label": "Reciprocal Rank Fusion",
+      "config": {
+        "k_constant": 60,
+        "output_top_k": 10,
+        "description": "Merges dense + sparse results using RRF scoring"
+      },
+      "position": {
+        "x": 1300,
+        "y": 300
+      }
+    },
+    {
+      "id": "llm_reranker",
+      "type": "LLMChain",
+      "label": "LLM Reranker",
+      "config": {
+        "model": "gpt-5",
+        "provider": "AzureOpenAI",
+        "prompt_template": "Rate relevance 0-10 for each document against the query.",
+        "output_top_n": 5
+      },
+      "position": {
+        "x": 1600,
+        "y": 300
+      }
+    },
+    {
+      "id": "answer_synthesizer",
+      "type": "LLMChain",
+      "label": "Answer Synthesizer",
+      "config": {
+        "model": "gpt-5",
+        "provider": "AzureOpenAI",
+        "system_prompt": "You are an AI Leadership Insight Agent. Answer ONLY from provided context. Cite sources.",
+        "max_tokens": 2048,
+        "output_format": "structured_markdown"
+      },
+      "position": {
+        "x": 1900,
+        "y": 300
+      }
+    },
+    {
+      "id": "quality_gate",
+      "type": "LLMChain",
+      "label": "Quality Gate (Hallucination Check)",
+      "config": {
+        "model": "gpt-5",
+        "provider": "AzureOpenAI",
+        "prompt_template": "Check if answer is grounded, complete, and accurate. Return {pass, confidence, reason}.",
+        "max_retries": 2,
+        "retry_target": "answer_synthesizer"
+      },
+      "position": {
+        "x": 2200,
+        "y": 300
+      }
+    },
+    {
+      "id": "output_node",
+      "type": "TextOutput",
+      "label": "Leadership Answer",
+      "config": {
+        "output_format": "markdown",
+        "include_sources": true,
+        "include_confidence": true
+      },
+      "position": {
+        "x": 2500,
+        "y": 300
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "input_node",
+      "target": "semantic_cache"
+    },
+    {
+      "source": "semantic_cache",
+      "target": "output_node",
+      "condition": "cache_hit == True"
+    },
+    {
+      "source": "semantic_cache",
+      "target": "query_analyzer",
+      "condition": "cache_hit == False"
+    },
+    {
+      "source": "query_analyzer",
+      "target": "query_decomposer"
+    },
+    {
+      "source": "query_decomposer",
+      "target": "vector_store"
+    },
+    {
+      "source": "query_decomposer",
+      "target": "bm25_retriever"
+    },
+    {
+      "source": "vector_store",
+      "target": "rrf_fusion"
+    },
+    {
+      "source": "bm25_retriever",
+      "target": "rrf_fusion"
+    },
+    {
+      "source": "rrf_fusion",
+      "target": "llm_reranker"
+    },
+    {
+      "source": "llm_reranker",
+      "target": "answer_synthesizer"
+    },
+    {
+      "source": "answer_synthesizer",
+      "target": "quality_gate"
+    },
+    {
+      "source": "quality_gate",
+      "target": "output_node",
+      "condition": "pass == True"
+    },
+    {
+      "source": "quality_gate",
+      "target": "answer_synthesizer",
+      "condition": "pass == False AND iteration < 2"
+    }
+  ],
+  "global_config": {
+    "azure_openai_endpoint": "https://ue2daoipocaoa0l.openai.azure.com/",
+    "api_version": "2024-02-15-preview",
+    "chunk_size": 350,
+    "chunk_overlap": 100,
+    "document_directory": "sample_company_docs/"
+  }
+}

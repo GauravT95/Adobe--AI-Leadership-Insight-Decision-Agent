@@ -1,0 +1,20 @@
+ACME CORPORATION — Q3 FY2025 QUARTERLY PERFORMANCE REPORT
+
+EXECUTIVE SUMMARY
+Q3 FY2025 delivered mixed results. Revenue grew 11% YoY to $1.24B, but two departments underperformed.
+
+ENGINEERING & PRODUCT — Status: ON TRACK, Rating: A
+Budget: 94% ($170M/$181M), 12/14 milestones, Sprint velocity 112 (target 100), 8 AI features shipped.
+
+SALES & MARKETING — Status: UNDERPERFORMING, Rating: C
+Revenue: $1.24B vs $1.35B target (92%), Pipeline 2.8x (target 3.5x), CAC $8,400 (target $7,200),
+Win Rate 28% (target 32%), Deal cycle lengthened 90→127 days.
+
+CUSTOMER SUPPORT — Status: UNDERPERFORMING, Rating: D
+NPS 42 (target 55), Response time 4.2h (target 2h), Churn 6.8% (target 5%), Understaffed by ~120 agents.
+
+FINANCE & OPERATIONS — Status: ON TRACK, Rating: A-
+OpEx $412M (within 2% of budget), DSO 38 days, Procurement savings $12.4M.
+
+HR — Status: ON TRACK, Rating: B+
+Open positions 340 (down from 520), Time to hire 42 days, Engagement 4.1/5.0.

@@ -1,0 +1,17 @@
+ACME CORPORATION — RISK ASSESSMENT REPORT H2 FY2025
+
+RISK MATRIX: 24 total — 3 Critical, 7 High, 9 Medium, 5 Low
+
+RISK-001: Cybersecurity — CRITICAL/HIGH
+Impact: Data breach 2M+ records. 340% phishing increase. Two near-miss staging intrusions.
+Mitigation: $15M emergency budget, AI threat detection Q4, mandatory training, red team assessment.
+
+RISK-002: AI/ML Talent Retention — CRITICAL/HIGH
+18% AI team attrition (vs 8.2% avg). Competitors offering 30-40% premiums. 12 senior ML engineers departed.
+Mitigation: $25M retention bonuses, "AI Fellow" track, flexible remote, stock refresh.
+
+RISK-003: EU AI Act Compliance — CRITICAL/CERTAIN
+Penalties up to 6% revenue (~$289M). 14 high-risk AI features, 8 have documentation gaps. Cost $45-60M.
+Mitigation: AI Governance Board, Head of AI Ethics hired, 6-month compliance sprint, Baker McKenzie engaged.
+
+HIGH RISKS: Cloud concentration (78% AWS), 47 GenAI startup competitors, Currency exposure 42% non-USD, Technical debt 31% legacy code ($48M/yr maintenance).

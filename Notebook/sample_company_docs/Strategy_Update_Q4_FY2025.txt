@@ -1,0 +1,18 @@
+ACME CORPORATION — STRATEGIC & OPERATIONAL UPDATE Q4 FY2025
+
+INITIATIVE 1: PROJECT PHOENIX — AI-NATIVE PLATFORM ($320M / 3yr)
+Phase 1 40% complete. Inference latency -60%. 2.1B requests/day. 3 pilot customers.
+Expected: +$400M ARR by FY2028. Risk: 23 open positions in platform team.
+
+INITIATIVE 2: SOUTHEAST ASIA EXPANSION ($85M / 2yr)
+Singapore HQ (42 employees), 3/4 regulatory approvals, 12 enterprise customers ($4.2M ARR).
+Expected: +$120M ARR by FY2027. Challenge: 30-40% lower local pricing.
+
+INITIATIVE 3: HEALTHCARE & FINANCIAL SERVICES VERTICALS ($150M / 2yr)
+Healthcare: HIPAA certified, 3 hospital partnerships, $18M pipeline.
+FinServ: SOC2 Type II, banking-grade residency, $32M pipeline.
+Expected: +$200M ARR by FY2027.
+
+PROJECT LEAN: Target $80M savings, achieved $52M (65%). Consolidated 12→5 SaaS tools ($8M), automated 340 processes ($14M), renegotiated cloud ($22M), travel -30% ($8M).
+
+BOARD Q4: $15M cybersecurity (APPROVED), $25M AI retention (APPROVED), acquisition evaluation (IN PROGRESS).
